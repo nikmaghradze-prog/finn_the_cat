@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Финн — шаг 1</title>
+  <title>Finn the Cat</title>
   <style>
-    body { background: #222; color: #eee; font-family: sans-serif; text-align: center; }
+    body { background: #222; margin: 0; padding-top: 20px; text-align: center; }
     canvas { background: #f4e4c1; border: 4px solid #000; }
   </style>
 </head>
 <body>
-  <h1>Финн — шаг 1</h1>
-  <p>Нажимай стрелки ← и → на клавиатуре</p>
-
   <!-- canvas — это «холст», на котором мы рисуем игру -->
   <canvas id="game" width="800" height="400"></canvas>
 
@@ -20,6 +17,18 @@
     // Находим холст на странице и берём «кисточку» для рисования
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
+
+    // ===== ТЕКСТЫ ИГРЫ =====
+    // Весь текст, который видит игрок, живёт ТОЛЬКО здесь.
+    // Чтобы добавить язык, допиши рядом, например:
+    //   ru: { title: "Кот Финн", hint: "Стрелки ← → — бег" },
+    const TEXT = {
+      en: {
+        title: "Finn the Cat",
+        hint: "Use ← → arrow keys to run",
+      },
+    };
+    let lang = "en";   // текущий язык игры
 
     // ===== ПЕРЕМЕННЫЕ =====
     // Переменная — это коробочка с именем, в которой лежит значение.
@@ -66,6 +75,14 @@
 
       ctx.fillStyle = "orange";                         // цвет Финна
       ctx.fillRect(x, y, size, size);                   // рисуем Финна
+
+      // Текст берём из TEXT по текущему языку
+      ctx.fillStyle = "#000";
+      ctx.textAlign = "center";
+      ctx.font = "bold 36px sans-serif";
+      ctx.fillText(TEXT[lang].title, canvas.width / 2, 60);
+      ctx.font = "20px sans-serif";
+      ctx.fillText(TEXT[lang].hint, canvas.width / 2, 100);
 
       // Просим браузер вызвать gameLoop ещё раз в следующем кадре
       requestAnimationFrame(gameLoop);
